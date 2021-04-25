@@ -1,7 +1,7 @@
 /*	Author: Stephen Dong
  *  Partner(s) Name: 
  *	Lab Section:
- *	Assignment: Lab #5  Exercise #2
+ *	Assignment: Lab #5  Exercise #3
  *	Exercise Description: [optional - include for your own benefit]
  *
  *	I acknowledge all content contained herein, excluding template or example
@@ -22,21 +22,21 @@ int main(void) {
 	enum LED {WAIT, WAIT_RELEASE, NEXT_LED_L, NEXT_LED_R, CLEAR_LED} LED_STATE;
 
 	while(1) {
-		button = PINA & 0x01;
+		button = ~PINA & 0x01;
 		
 		switch (LED_STATE) {
 			case WAIT:
-				if (button && direction) {
+				if (button && direction) {	// going left
 					if (led & 0x20) {
-						LED_STATE = CLEAR_LED;
+						LED_STATE = NEXT_LED_R;
 					}
 					else {
 						LED_STATE = NEXT_LED_L;
 					}
 				}
-				else if (button && !direction) {
+				else if (button && !direction) {	// going right
 					if (led & 0x01) {
-						LED_STATE = CLEAR_LED;
+						LED_STATE = CLEAR_LED;	// reset after going right all the way
 					}
 					else {
 						LED_STATE = NEXT_LED_R;
@@ -72,19 +72,21 @@ int main(void) {
 				// nothing
 				break;
 			case NEXT_LED_L:
-				led = (led << 1) | 0x01;
+				direction = 0x01;
+				if (!led) {
+					led = led| 0x01;
+				}
+				else {
+					led = (led << 1);
+				}
 				break;
 			case NEXT_LED_R:
-				led = (led >> 1) | 0x20;
+				direction = 0x00;
+				led = (led >> 1);
 				break;
 			case CLEAR_LED:
 				led = 0x00;
-				if (direction) {	// left go right now
-					direction = 0x00;
-				}
-				else {	// right go left now
-					direction = 0x01;
-				}
+				direction = 0x01;
 
 				break;
 		}

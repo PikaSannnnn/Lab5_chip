@@ -19,9 +19,10 @@ int main(void) {
 	unsigned char led = 0x07;
 
 	enum LED {RST, WAIT, WAIT_INC_RELEASE, WAIT_DEC_RELEASE, INC, DEC} LED_STATE;
+    LED_STATE = WAIT;
 
 	while(1) {
-        button = PINA & 0x03;
+        button = ~PINA & 0x03;
         
         switch (LED_STATE) {
             case RST:

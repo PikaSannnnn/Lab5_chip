@@ -21,7 +21,7 @@ int main(void) {
 
     /* Insert your solution below */
 	while (1) {
-		sensor = PINA & 0x0F;
+		sensor = ~PINA & 0x0F;
 		led = 0x00;
 
 		if (sensor >= 13) {   // 13 - 15
@@ -37,18 +37,21 @@ int main(void) {
 			led = 0x00 | 0x38; // PC5 - PC3
 		}
 		else if (sensor >= 3) {   // 3 - 4
-			led = 0x00 | 0x30; // PC5 - PC4
+			led = 0x00 | 0x70; // PC5 - PC4
 		}
 		else if (sensor >= 1) {   // 1 - 2
-			led = 0x00 | 0x20; // PC5
+			led = 0x00 | 0x60; // PC5
+		}
+		else {
+			led = 0x00 | 0x40;
 		}
 
 		// low fuel
-		if (sensor <= 4) {	// if any of the lower leds are on, fuel light will not turn on
-			led = led | 0x40;
-		}
+		// if (sensor <= 4) {	// if any of the lower leds are on, fuel light will not turn on
+		// 	led = led | 0x40;
+		// }
 		
-		PORTC = 0x00 | led;
+		PORTC = led;
 	}
 
 

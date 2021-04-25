@@ -1,4 +1,4 @@
-tests = [ {'description': 'PINA: 0x00 => PORTC: 7',
+tests = [ {'description': 'PINA: 0x00 => PORTC: 7',	# TESTS WRITTEN FOR NON-PULLUP
 	'steps': [{'inputs': [('PINA', 0x00)], 'iterations': 2}],
 	'expected': [('PORTC', 7)],
 	}, 

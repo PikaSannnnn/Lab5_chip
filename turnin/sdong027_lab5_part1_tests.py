@@ -1,4 +1,4 @@
-tests = [ {'description': 'Full Fuel',
+tests = [ {'description': 'Full Fuel',	# TESTS WRITTEN FOR NON-PULLUP
 	'steps': [ {'inputs': [('PINA', 0x0F)], 'iterations': 2 } ],
 	'expected': [('PORTC', 0x3F)],
 	},
